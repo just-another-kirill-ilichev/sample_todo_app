@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/domain/db_connection.dart';
@@ -7,6 +9,12 @@ import 'package:sample_todo_app/state/todo_list.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Logger.root.level = Level.ALL;
+  // TODO
+  Logger.root.onRecord.listen((record) {
+    print(
+        '[${record.level.name}] ${record.loggerName}: ${record.time}: ${record.message}');
+  });
 
   runApp(TodoApp());
 }
@@ -19,6 +27,7 @@ class TodoApp extends StatelessWidget {
     return FutureBuilder(
       future: Future.wait([
         _dbConnection.initializeDb(),
+        initializeDateFormatting(),
       ]),
       builder: (context, snapshot) =>
           snapshot.connectionState == ConnectionState.done
