@@ -12,13 +12,14 @@ class TodoListPage extends StatelessWidget {
         builder: (ctx, todos, ___) => ListView.builder(
           itemCount: todos.items.length,
           itemBuilder: (_, idx) => ListTile(
+            leading: Text(todos.items[idx].id.toString()),
             title: Text(todos.items[idx].title),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addTest(context),
-        tooltip: 'Increment',
+        tooltip: 'Add',
         child: Icon(Icons.add),
       ),
     );
