@@ -15,17 +15,6 @@ class Todo {
     required this.finished,
   });
 
-  factory Todo.create(
-      DateTime notificationDateTime, String title, String description) {
-    return Todo(
-      creationDate: DateTime.now(),
-      notificationDateTime: notificationDateTime,
-      title: title,
-      description: description,
-      finished: false,
-    );
-  }
-
   factory Todo.fromMap(Map<String, dynamic> map) {
     return Todo(
       id: map['id'].toInt(),
