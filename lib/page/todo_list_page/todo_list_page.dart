@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_todo_app/model/todo.dart';
+import 'package:sample_todo_app/config/app_router.dart';
+import 'package:sample_todo_app/page/todo_list_page/todo_tile.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
 
 class TodoListPage extends StatelessWidget {
@@ -11,22 +12,14 @@ class TodoListPage extends StatelessWidget {
       body: Consumer<TodoList>(
         builder: (ctx, todos, ___) => ListView.builder(
           itemCount: todos.items.length,
-          itemBuilder: (_, idx) => ListTile(
-            leading: Text(todos.items[idx].id.toString()),
-            title: Text(todos.items[idx].title),
-          ),
+          itemBuilder: (_, idx) => TodoTile(todo: todos.items[idx]),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _addTest(context),
+        onPressed: () => Navigator.pushNamed(context, AppRoute.add_todo),
         tooltip: 'Add',
         child: Icon(Icons.add),
       ),
     );
-  }
-
-  void _addTest(BuildContext context) {
-    Provider.of<TodoList>(context, listen: false)
-        .add(Todo.create(DateTime.now(), 'Test', 'Test'));
   }
 }

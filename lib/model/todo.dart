@@ -35,4 +35,22 @@ class Todo {
       'finished': finished ? 1 : 0,
     };
   }
+
+  Todo copyWith({
+    int? id,
+    DateTime? creationDate,
+    DateTime? notificationDateTime,
+    String? title,
+    String? description,
+    bool? finished,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      creationDate: creationDate ?? this.creationDate,
+      notificationDateTime: notificationDateTime ?? this.notificationDateTime,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      finished: finished ?? this.finished,
+    );
+  }
 }
