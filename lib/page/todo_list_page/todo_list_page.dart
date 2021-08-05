@@ -10,9 +10,10 @@ class TodoListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Список')),
       body: Consumer<TodoList>(
-        builder: (ctx, todos, ___) => ListView.builder(
+        builder: (ctx, todos, ___) => ListView.separated(
           itemCount: todos.items.length,
           itemBuilder: (_, idx) => TodoTile(todo: todos.items[idx]),
+          separatorBuilder: (BuildContext context, int index) => Divider(),
         ),
       ),
       floatingActionButton: FloatingActionButton(

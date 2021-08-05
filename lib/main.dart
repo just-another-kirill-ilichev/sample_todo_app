@@ -27,7 +27,7 @@ class TodoApp extends StatelessWidget {
     return FutureBuilder(
       future: Future.wait([
         _dbConnection.initializeDb(),
-        initializeDateFormatting(),
+        initializeDateFormatting('ru_RU'),
       ]),
       builder: (context, snapshot) =>
           snapshot.connectionState == ConnectionState.done
@@ -49,7 +49,7 @@ class TodoApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.amber,
         ),
         initialRoute: AppRoute.todo_list,
         onGenerateRoute: AppRouter.onGenerateRoute,
