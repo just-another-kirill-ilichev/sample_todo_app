@@ -31,22 +31,24 @@ class DateTimeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: InkWell(
+    return InputDecorator(
+      decoration: InputDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _Selector(
+            icon: Icon(Icons.calendar_today_outlined),
             child: Text(DateFormat.yMMMd().format(value)),
             onTap: () => _selectDate(context),
           ),
-        ),
-        Expanded(
-          child: InkWell(
+          Divider(color: Colors.grey),
+          _Selector(
+            icon: Icon(Icons.watch_later_outlined),
             child: Text(DateFormat.Hm().format(value)),
             onTap: () => _selectTime(context),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -84,5 +86,41 @@ class DateTimeField extends StatelessWidget {
     );
 
     onChanged(newValue);
+  }
+}
+
+class _Selector extends StatelessWidget {
+  final Widget icon;
+  final Widget child;
+  final VoidCallback onTap;
+
+  const _Selector({
+    Key? key,
+    required this.icon,
+    required this.child,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var primary = Theme.of(context).accentColor;
+
+    return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 8, 12, 8),
+            child: IconTheme(
+              data: IconThemeData(color: primary),
+              child: icon,
+            ),
+          ),
+          child,
+        ],
+      ),
+      onTap: onTap,
+    );
   }
 }

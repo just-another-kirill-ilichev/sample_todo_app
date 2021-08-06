@@ -32,7 +32,11 @@ class TodoTile extends StatelessWidget {
           onChanged: (value) => _setFinished(context, value),
           value: todo.finished,
         ),
-        onTap: () => Navigator.pushNamed(context, AppRoute.todo_details),
+        onTap: () => Navigator.pushNamed(
+          context,
+          AppRoute.edit_todo,
+          arguments: todo,
+        ),
       ),
       direction: DismissDirection.endToStart,
       background: Container(
@@ -46,7 +50,8 @@ class TodoTile extends StatelessWidget {
   }
 
   void _setFinished(BuildContext context, bool finished) =>
-      Provider.of<TodoList>(context, listen: false).setFinished(todo, finished);
+      Provider.of<TodoList>(context, listen: false)
+          .save(todo.copyWith(finished: finished));
 
   void _remove(BuildContext context) =>
       Provider.of<TodoList>(context, listen: false).remove(todo);

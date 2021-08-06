@@ -34,18 +34,17 @@ class TodoList extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setFinished(Todo item, bool finished) async {
-    var newItem = item.copyWith(finished: finished);
-
-    await connection.database.update('todos', newItem.toMap(),
-        where: 'id = ?', whereArgs: [newItem.id]);
+  Future<void> save(Todo item) async {
+    await connection.database
+        .update('todos', item.toMap(), where: 'id = ?', whereArgs: [item.id]);
 
     await fetchAll();
     notifyListeners();
   }
 
   Future<void> fetchAll() async {
-    var queryResult = await connection.database.query('todos');
+    var queryResult =
+        await connection.database.query('todos', orderBy: 'finished');
     _todos = queryResult.map((e) => Todo.fromMap(e)).toList();
     notifyListeners();
   }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sample_todo_app/page/add_todo_page/add_todo_page.dart';
-import 'package:sample_todo_app/page/todo_details_page/todo_details_page.dart';
+import 'package:sample_todo_app/model/todo.dart';
+import 'package:sample_todo_app/page/todo_form_page/todo_form_page.dart';
 import 'package:sample_todo_app/page/todo_list_page/todo_list_page.dart';
 
 class AppRoute {
   static const todo_list = 'todo_list';
-  static const todo_details = 'todo_details';
   static const add_todo = 'add_todo';
+  static const edit_todo = 'edit_todo';
 }
 
 class AppRouter {
@@ -14,10 +14,12 @@ class AppRouter {
     switch (settings.name) {
       case AppRoute.todo_list:
         return MaterialPageRoute(builder: (_) => TodoListPage());
-      case AppRoute.todo_details:
-        return MaterialPageRoute(builder: (_) => TodoDetailsPage());
       case AppRoute.add_todo:
-        return MaterialPageRoute(builder: (_) => AddTodoPage());
+        return MaterialPageRoute(builder: (_) => TodoFormPage.add());
+      case AppRoute.edit_todo:
+        return MaterialPageRoute(
+          builder: (_) => TodoFormPage.edit(settings.arguments as Todo),
+        );
     }
   }
 }
