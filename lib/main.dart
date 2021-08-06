@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/domain/db_connection.dart';
+import 'package:sample_todo_app/domain/log_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Logger.root.level = Level.ALL;
-  // TODO
-  Logger.root.onRecord.listen((record) {
-    print(
-        '[${record.level.name}] ${record.loggerName}: ${record.time}: ${record.message}');
-  });
+  LogService.instance().initialize();
 
   runApp(TodoApp());
 }
@@ -50,6 +45,17 @@ class TodoApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.amber,
+          inputDecorationTheme: InputDecorationTheme(
+            enabledBorder: const OutlineInputBorder(
+              // width: 0.0 produces a thin "hairline" border
+              borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+            ),
+            border: OutlineInputBorder(),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 8,
+            ),
+          ),
         ),
         initialRoute: AppRoute.todo_list,
         onGenerateRoute: AppRouter.onGenerateRoute,
