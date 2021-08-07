@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
+import 'package:sample_todo_app/config/app_settings.dart';
 import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
 import 'package:sample_todo_app/widget/custom_checkbox.dart';
@@ -26,8 +27,8 @@ class TodoTile extends StatelessWidget {
             color: todo.finished ? Colors.grey : Colors.black,
           ),
         ),
-        subtitle: Text(DateFormat('hh:mm d MMMM yyyy', 'ru_RU')
-            .format(todo.notificationDateTime)),
+        subtitle:
+            Text(AppSettings.dateTimeFormat.format(todo.notificationDateTime)),
         trailing: CustomCheckbox(
           onChanged: (value) => _setFinished(context, value),
           value: todo.finished,

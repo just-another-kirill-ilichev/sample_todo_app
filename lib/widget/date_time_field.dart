@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sample_todo_app/config/app_settings.dart';
 
 class DateTimeFormField extends FormField<DateTime> {
   DateTimeFormField({
@@ -38,13 +39,13 @@ class DateTimeField extends StatelessWidget {
         children: [
           _Selector(
             icon: Icon(Icons.calendar_today_outlined),
-            child: Text(DateFormat.yMMMd().format(value)),
+            child: Text(AppSettings.dateFormat.format(value)),
             onTap: () => _selectDate(context),
           ),
           Divider(color: Colors.grey),
           _Selector(
             icon: Icon(Icons.watch_later_outlined),
-            child: Text(DateFormat.Hm().format(value)),
+            child: Text(AppSettings.timeFormat.format(value)),
             onTap: () => _selectTime(context),
           ),
         ],

@@ -7,6 +7,8 @@ import 'package:sample_todo_app/domain/log_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
 
+import 'config/app_settings.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   LogService.instance().initialize();
@@ -22,7 +24,7 @@ class TodoApp extends StatelessWidget {
     return FutureBuilder(
       future: Future.wait([
         _dbConnection.initializeDb(),
-        initializeDateFormatting('ru_RU'),
+        initializeDateFormatting(AppSettings.locale),
       ]),
       builder: (context, snapshot) =>
           snapshot.connectionState == ConnectionState.done
