@@ -1,18 +1,18 @@
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
+import 'package:sample_todo_app/domain/table_schema.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbConnection {
   static final Logger _logger = Logger('DbConnection');
   static const String _dbName = 'todos.db';
 
-  static const _migrationScripts = <String>[
-    "ALTER TABLE todos ADD folder TEXT; UPDATE todos SET folder = 'default'"
-  ];
-
   late Database _database;
+  final List<TableSchema> tables;
 
   Database get database => _database;
+
+  DbConnection(this.tables);
 
   Future<void> initializeDb() async {
     _logger.fine('Connecting to database...');
@@ -22,19 +22,13 @@ class DbConnection {
 
       _database = await openDatabase(
         dbPath,
-        onCreate: (db, version) async {
-          _logger.fine('Creating database schema...');
-          await db.execute(
-            'CREATE TABLE todos(id INTEGER PRIMARY KEY, title TEXT, description TEXT, creationDate TEXT, notificationDateTime TEXT, folder TEXT, finished INTEGER)',
-          );
-          _logger.fine('Database schema created successfully');
+        onConfigure: (db) async {
+          await db.execute('PRAGMA foreign_keys = ON;');
         },
-        onUpgrade: (db, oldVersion, newVersion) async {
-          _logger.fine('Applying migrations...');
-          await db.execute(_getMigrationScript(oldVersion, newVersion));
-          _logger.fine('Migrations applied successfully');
-        },
-        version: 2,
+        onCreate: (db, version) async => await _createDb(db),
+        onUpgrade: (db, oldVersion, newVersion) async =>
+            await _migrateDb(db, oldVersion, newVersion),
+        version: 4,
       );
 
       _logger.fine('Connection successful');
@@ -43,13 +37,31 @@ class DbConnection {
     }
   }
 
-  String _getMigrationScript(int oldVersion, int newVersion) {
-    var script = '';
-
-    for (int i = oldVersion - 1; i < newVersion - 1; i++) {
-      script += _migrationScripts[i] + ';';
+  Future<void> _createDb(Database db) async {
+    _logger.fine('Creating database schema...');
+    for (var table in tables) {
+      _logger.fine('Creating table ${table.tableName}...');
+      await db.execute(table.getCreationScript());
     }
+    _logger.fine('Database schema created successfully');
+  }
 
-    return script;
+  Future<void> _migrateDb(Database db, int oldVersion, int newVersion) async {
+    _logger.fine('Applying migrations...');
+    for (var table in tables) {
+      _logger.fine('Migrating table ${table.tableName}...');
+      if (table.hasBreakingChanges(oldVersion, newVersion)) {
+        _logger.warning(
+            'Cannot apply migration to table ${table.tableName}. Recreating...');
+        db.execute('DROP TABLE IF EXISTS ${table.tableName};');
+        db.execute(table.getCreationScript());
+      } else {
+        var migrations = table.getMigrations(oldVersion, newVersion);
+        for (var migration in migrations) {
+          db.execute(migration.script!);
+        }
+      }
+    }
+    _logger.fine('Migrations applied successfully');
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
+import 'package:sample_todo_app/config/app_schema.dart';
 import 'package:sample_todo_app/domain/db_connection.dart';
 import 'package:sample_todo_app/domain/log_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
@@ -17,7 +18,10 @@ void main() {
 }
 
 class TodoApp extends StatelessWidget {
-  final DbConnection _dbConnection = DbConnection();
+  final DbConnection _dbConnection = DbConnection([
+    AppSchema.todos,
+    AppSchema.folders,
+  ]);
 
   @override
   Widget build(BuildContext context) {
