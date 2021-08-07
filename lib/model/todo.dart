@@ -4,6 +4,7 @@ class Todo {
   final DateTime notificationDateTime;
   final String title;
   final String description;
+  final String? folder;
   final bool finished;
 
   Todo({
@@ -13,6 +14,7 @@ class Todo {
     required this.title,
     required this.description,
     required this.finished,
+    this.folder,
   });
 
   factory Todo.fromMap(Map<String, dynamic> map) {
@@ -23,6 +25,7 @@ class Todo {
       title: map['title'],
       description: map['description'],
       finished: map['finished'] == 1,
+      folder: map['folder'],
     );
   }
 
@@ -33,6 +36,7 @@ class Todo {
       'title': title,
       'description': description,
       'finished': finished ? 1 : 0,
+      'folder': folder,
     };
   }
 
@@ -42,6 +46,7 @@ class Todo {
     DateTime? notificationDateTime,
     String? title,
     String? description,
+    String? folder,
     bool? finished,
   }) {
     return Todo(
@@ -50,6 +55,7 @@ class Todo {
       notificationDateTime: notificationDateTime ?? this.notificationDateTime,
       title: title ?? this.title,
       description: description ?? this.description,
+      folder: folder ?? this.folder,
       finished: finished ?? this.finished,
     );
   }
