@@ -8,12 +8,22 @@ class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Список')),
       body: Consumer<TodoList>(
-        builder: (ctx, todos, ___) => ListView.separated(
-          itemCount: todos.items.length,
-          itemBuilder: (_, idx) => TodoTile(todo: todos.items[idx]),
-          separatorBuilder: (BuildContext context, int index) => Divider(),
+        builder: (ctx, todos, ___) => CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 200,
+              pinned: true,
+              backgroundColor: Theme.of(ctx).canvasColor,
+              flexibleSpace: FlexibleSpaceBar(title: Text('Список')),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (ctx, idx) => TodoTile(todo: todos.items[idx]),
+                childCount: todos.items.length,
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
