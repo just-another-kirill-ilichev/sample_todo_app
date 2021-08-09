@@ -117,12 +117,7 @@ class TodoFormPage extends StatelessWidget {
     }
 
     _formKey.currentState?.save();
-
-    if (_formState.mode == TodoFormMode.add) {
-      Provider.of<TodoList>(context, listen: false).add(_formState.toModel());
-    } else {
-      Provider.of<TodoList>(context, listen: false).save(_formState.toModel());
-    }
+    Provider.of<TodoList>(context, listen: false).save(_formState.toModel());
 
     return true;
   }

@@ -5,20 +5,20 @@ import 'package:sqflite/sqflite.dart';
 
 class DbConnection {
   static final Logger _logger = Logger('DbConnection');
-  static const String _dbName = 'todos.db';
 
   late Database _database;
+  final String dbName;
   final List<TableSchema> tables;
 
   Database get database => _database;
 
-  DbConnection(this.tables);
+  DbConnection(this.dbName, this.tables);
 
   Future<void> initializeDb() async {
     _logger.fine('Connecting to database...');
 
     try {
-      var dbPath = join(await getDatabasesPath(), _dbName);
+      var dbPath = join(await getDatabasesPath(), dbName);
 
       _database = await openDatabase(
         dbPath,
