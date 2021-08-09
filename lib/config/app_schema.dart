@@ -1,4 +1,7 @@
-import 'package:sample_todo_app/domain/table_schema.dart';
+import 'package:sample_todo_app/domain/schema/field.dart';
+import 'package:sample_todo_app/domain/schema/field_type.dart';
+import 'package:sample_todo_app/domain/schema/migration.dart';
+import 'package:sample_todo_app/domain/schema/table_schema.dart';
 
 class AppSchema {
   static TableSchema todos = TableSchema(

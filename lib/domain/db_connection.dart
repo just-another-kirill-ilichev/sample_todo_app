@@ -1,6 +1,6 @@
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
-import 'package:sample_todo_app/domain/table_schema.dart';
+import 'package:sample_todo_app/domain/schema/table_schema.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbConnection {
