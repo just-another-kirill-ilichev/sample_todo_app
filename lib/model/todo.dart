@@ -1,4 +1,6 @@
-class Todo {
+import 'package:sample_todo_app/domain/repository/generic/repository.dart';
+
+class Todo implements Entity<int> {
   final int? id;
   final DateTime creationDate;
   final DateTime notificationDateTime;

@@ -1,4 +1,6 @@
-class Folder {
+import 'package:sample_todo_app/domain/repository/generic/repository.dart';
+
+class Folder implements Entity<int> {
   final int id;
   final String title;
 
