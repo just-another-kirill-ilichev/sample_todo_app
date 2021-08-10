@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sample_todo_app/config/app_settings.dart';
 
 class DateTimeFormField extends FormField<DateTime> {
@@ -33,7 +32,7 @@ class DateTimeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputDecorator(
-      decoration: InputDecoration(),
+      decoration: InputDecoration(contentPadding: const EdgeInsets.all(8)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

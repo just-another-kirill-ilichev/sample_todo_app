@@ -21,6 +21,7 @@ class TodoTile extends StatelessWidget {
       child: CustomListTile(
         title: Text(
           todo.title,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 20,
             fontWeight: todo.finished ? FontWeight.normal : FontWeight.bold,

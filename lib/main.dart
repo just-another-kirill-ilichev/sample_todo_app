@@ -47,15 +47,29 @@ class TodoApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.amber,
           inputDecorationTheme: InputDecorationTheme(
-            enabledBorder: const OutlineInputBorder(
-              // width: 0.0 produces a thin "hairline" border
-              borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
             ),
-            border: OutlineInputBorder(),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 8,
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
             ),
+            errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            filled: true,
+            fillColor: Colors.amber.withOpacity(0.15),
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            contentPadding: const EdgeInsets.all(16),
           ),
         ),
         initialRoute: AppRoute.todo_list,

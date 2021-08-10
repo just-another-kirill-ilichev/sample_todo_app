@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/model/todo.dart';
@@ -26,33 +27,44 @@ class TodoFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _formState.mode == TodoFormMode.add ? 'Добавить' : 'Редактировать',
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              if (_save(context)) Navigator.pop(context);
-            },
-            icon: Icon(Icons.save),
-          )
-        ],
-      ),
       body: WillPopScope(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTitleField(),
-                _buildDescriptionField(),
-                _buildNotificationDateTimeField(),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 200,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    if (_save(context)) Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.save),
+                )
               ],
+              pinned: true,
+              backgroundColor: Theme.of(context).canvasColor,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(_formState.mode == TodoFormMode.edit
+                    ? 'Редактировать'
+                    : 'Добавить'),
+              ),
             ),
-          ),
+            SliverFillRemaining(
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitleField(),
+                      _buildDescriptionField(),
+                      _buildNotificationDateTimeField(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         onWillPop: () => _onWillPop(context),
       ),
@@ -74,7 +86,11 @@ class TodoFormPage extends StatelessWidget {
     return FormFieldWrapper(
       title: Text('Описание'),
       field: TextFormField(
-        maxLines: 7,
+        maxLines: 5,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.description_outlined, color: Colors.amber),
+          hintText: 'Описание',
+        ),
         initialValue: _formState.description,
         onSaved: (value) => _formState.description = value,
         validator: (value) =>
@@ -87,6 +103,10 @@ class TodoFormPage extends StatelessWidget {
     return FormFieldWrapper(
       title: Text('Название'),
       field: TextFormField(
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.title_outlined, color: Colors.amber),
+          hintText: 'Название',
+        ),
         initialValue: _formState.title,
         onSaved: (value) => _formState.title = value,
         validator: (value) =>

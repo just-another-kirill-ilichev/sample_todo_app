@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
+import 'package:sample_todo_app/page/todo_list_page/custom_fab.dart';
 import 'package:sample_todo_app/page/todo_list_page/todo_tile.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
 
@@ -26,10 +27,9 @@ class TodoListPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CustomFab(
         onPressed: () => Navigator.pushNamed(context, AppRoute.add_todo),
-        tooltip: 'Add',
-        child: Icon(Icons.add),
+        icon: Icon(Icons.add),
       ),
     );
   }

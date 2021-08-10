@@ -36,23 +36,25 @@ class CustomListTile extends StatelessWidget {
               if (leading != null)
                 IconTheme(data: IconThemeData(color: primary), child: leading!),
               if (leading != null) SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.black87,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                      child: title,
                     ),
-                    child: title,
-                  ),
-                  SizedBox(height: 2),
-                  DefaultTextStyle(
-                    style: TextStyle(fontSize: 12, color: Colors.black45),
-                    child: subtitle,
-                  ),
-                ],
+                    SizedBox(height: 2),
+                    DefaultTextStyle(
+                      style: TextStyle(fontSize: 12, color: Colors.black45),
+                      child: subtitle,
+                    ),
+                  ],
+                ),
               ),
               Spacer(),
               DefaultTextStyle(
