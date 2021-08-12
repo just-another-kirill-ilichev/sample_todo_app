@@ -19,7 +19,7 @@ class TodoSqlRepository extends BaseSqlRepository<Todo> {
     var whereArgs = [];
 
     if (folderId == null && date == null) {
-      return await fetchAll();
+      return await fetchAllOrderBy(orderBy);
     }
 
     if (folderId != null) {

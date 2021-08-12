@@ -19,19 +19,19 @@ class RepositoryChangeNotifier<TItem extends Entity<int>,
   }
 
   Future<void> removeAll() async {
-    repository.removeAll();
+    await repository.removeAll();
     update();
   }
 
   Future<void> removeById(int id) async {
-    repository.removeById(id);
+    await repository.removeById(id);
     update();
   }
 
   Future<void> remove(TItem item) async => await removeById(item.id!);
 
   Future<void> save(TItem item) async {
-    repository.save(item);
+    await repository.save(item);
     update();
   }
 

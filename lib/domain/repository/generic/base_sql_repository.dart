@@ -18,7 +18,7 @@ class BaseSqlRepository<T extends Entity<int>> implements IRepository<T, int> {
     return serializer.deserializeMany(queryResult);
   }
 
-  Future<List<T>> fetchAllOrderBy(String column) async {
+  Future<List<T>> fetchAllOrderBy(String? column) async {
     var queryResult = await connection.database.query(table, orderBy: column);
     return serializer.deserializeMany(queryResult);
   }
