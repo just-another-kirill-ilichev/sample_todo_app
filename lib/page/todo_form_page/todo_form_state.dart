@@ -12,6 +12,7 @@ class TodoFormState {
   String? description;
   DateTime? creationTime;
   DateTime? notificationDateTime;
+  int? folderId;
   bool? finished;
 
   TodoFormState({
@@ -21,6 +22,7 @@ class TodoFormState {
     this.description,
     this.notificationDateTime,
     this.creationTime,
+    this.folderId,
     this.finished,
   });
 
@@ -29,6 +31,7 @@ class TodoFormState {
       id: todo.id,
       mode: TodoFormMode.edit,
       title: todo.title,
+      folderId: todo.folderId,
       description: todo.description,
       notificationDateTime: todo.notificationDateTime,
     );
@@ -55,6 +58,7 @@ class TodoFormState {
       creationDate: creationTime ?? DateTime.now(),
       notificationDateTime: notificationDateTime!,
       title: title!,
+      folderId: folderId,
       description: description!,
       finished: finished ?? false,
     );

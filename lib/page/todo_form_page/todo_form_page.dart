@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/page/todo_form_page/todo_form_state.dart';
+import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/custom_form_section.dart';
@@ -36,11 +39,36 @@ class TodoFormPage extends StatelessWidget {
           children: [
             _buildTitleField(),
             _buildDescriptionField(),
+            _buildFolder(context),
             _buildNotificationDateTimeField(),
           ],
         ),
       ),
       saveFormCallback: _save,
+    );
+  }
+
+  Widget _buildFolder(BuildContext context) {
+    return CustomFormSection(
+      title: Text('Папка'),
+      action: RichText(
+        text: TextSpan(
+          style: TextStyle(color: Theme.of(context).accentColor),
+          text: 'Добавить',
+          recognizer: TapGestureRecognizer()
+            ..onTap = () => Navigator.pushNamed(context, AppRoute.add_folder),
+        ),
+      ),
+      field: DropdownButtonFormField<int?>(
+        value: _formState.folderId,
+        items: Provider.of<FoldersChangeNotifier>(context)
+            .items
+            .map((e) => DropdownMenuItem(child: Text(e.title), value: e.id))
+            .toList()
+              ..add(DropdownMenuItem(child: Text('Не указано'), value: null)),
+        onChanged: (value) => _formState.folderId = value,
+        onSaved: (value) => _formState.folderId = value,
+      ),
     );
   }
 
