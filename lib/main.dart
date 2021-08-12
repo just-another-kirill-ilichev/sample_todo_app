@@ -6,7 +6,7 @@ import 'package:sample_todo_app/domain/db_service.dart';
 import 'package:sample_todo_app/domain/log_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
-import 'package:sample_todo_app/state/todo_list.dart';
+import 'package:sample_todo_app/state/todo_change_notifier.dart';
 
 import 'config/app_settings.dart';
 
@@ -39,13 +39,16 @@ class TodoApp extends StatelessWidget {
       providers: [
         Provider.value(value: _dbService),
         ChangeNotifierProxyProvider<DbService, FoldersChangeNotifier>(
-          create: (ctx) =>
-              FoldersChangeNotifier(Provider.of<DbService>(ctx, listen: false)),
-          update: (ctx, service, __) => FoldersChangeNotifier(service),
+          create: (ctx) => FoldersChangeNotifier(
+              Provider.of<DbService>(ctx, listen: false).folderRepository),
+          update: (ctx, service, __) =>
+              FoldersChangeNotifier(service.folderRepository),
         ),
-        ChangeNotifierProxyProvider<DbService, TodoList>(
-          create: (ctx) => TodoList(Provider.of<DbService>(ctx, listen: false)),
-          update: (ctx, service, __) => TodoList(service),
+        ChangeNotifierProxyProvider<DbService, TodoChangeNotifier>(
+          create: (ctx) => TodoChangeNotifier(
+              Provider.of<DbService>(ctx, listen: false).todoRepository),
+          update: (ctx, service, __) =>
+              TodoChangeNotifier(service.todoRepository),
         ),
       ],
       child: MaterialApp(

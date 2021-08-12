@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/config/app_settings.dart';
 import 'package:sample_todo_app/model/todo.dart';
-import 'package:sample_todo_app/state/todo_list.dart';
+import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_checkbox.dart';
 import 'package:sample_todo_app/widget/custom_list_tile.dart';
 
@@ -51,9 +51,9 @@ class TodoTile extends StatelessWidget {
   }
 
   void _setFinished(BuildContext context, bool finished) =>
-      Provider.of<TodoList>(context, listen: false)
+      Provider.of<TodoChangeNotifier>(context, listen: false)
           .save(todo.copyWith(finished: finished));
 
   void _remove(BuildContext context) =>
-      Provider.of<TodoList>(context, listen: false).remove(todo);
+      Provider.of<TodoChangeNotifier>(context, listen: false).remove(todo);
 }

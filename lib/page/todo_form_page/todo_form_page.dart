@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/model/todo.dart';
-import 'package:sample_todo_app/page/todo_form_page/form_field_wrapper.dart';
 import 'package:sample_todo_app/page/todo_form_page/todo_form_state.dart';
-import 'package:sample_todo_app/state/todo_list.dart';
+import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
+import 'package:sample_todo_app/widget/custom_form_section.dart';
 import 'package:sample_todo_app/widget/date_time_field.dart';
 
 class TodoFormPage extends StatelessWidget {
@@ -44,8 +44,8 @@ class TodoFormPage extends StatelessWidget {
     );
   }
 
-  FormFieldWrapper _buildNotificationDateTimeField() {
-    return FormFieldWrapper(
+  Widget _buildNotificationDateTimeField() {
+    return CustomFormSection(
       title: Text('Дата завершения'),
       field: DateTimeFormField(
         onSaved: (value) => _formState.notificationDateTime = value,
@@ -56,7 +56,7 @@ class TodoFormPage extends StatelessWidget {
   }
 
   Widget _buildDescriptionField() {
-    return FormFieldWrapper(
+    return CustomFormSection(
       title: Text('Описание'),
       field: TextFormField(
         maxLines: 5,
@@ -73,7 +73,7 @@ class TodoFormPage extends StatelessWidget {
   }
 
   Widget _buildTitleField() {
-    return FormFieldWrapper(
+    return CustomFormSection(
       title: Text('Название'),
       field: TextFormField(
         decoration: InputDecoration(
@@ -96,7 +96,7 @@ class TodoFormPage extends StatelessWidget {
     }
 
     _formKey.currentState?.save();
-    await Provider.of<TodoList>(context, listen: false)
+    await Provider.of<TodoChangeNotifier>(context, listen: false)
         .save(_formState.toModel());
 
     return true;

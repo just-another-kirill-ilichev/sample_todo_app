@@ -1,22 +1,9 @@
-import 'dart:collection';
-
-import 'package:flutter/material.dart';
-import 'package:sample_todo_app/domain/db_service.dart';
+import 'package:sample_todo_app/domain/repository/generic/base_sql_repository.dart';
 import 'package:sample_todo_app/model/folder.dart';
+import 'package:sample_todo_app/state/repository_change_notifier.dart';
 
-class FoldersChangeNotifier extends ChangeNotifier {
-  final DbService _service;
-
-  List<Folder> _items = [];
-
-  UnmodifiableListView<Folder> get items => UnmodifiableListView(_items);
-
-  FoldersChangeNotifier(this._service) {
-    fetchAll();
-  }
-
-  Future<void> fetchAll() async {
-    _items = await _service.folderRepository.fetchAll();
-    notifyListeners();
-  }
+class FoldersChangeNotifier
+    extends RepositoryChangeNotifier<Folder, BaseSqlRepository<Folder>> {
+  FoldersChangeNotifier(BaseSqlRepository<Folder> repository)
+      : super(repository);
 }
