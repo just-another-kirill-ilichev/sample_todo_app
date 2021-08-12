@@ -1,11 +1,11 @@
 import 'package:sample_todo_app/domain/repository/generic/repository.dart';
 
 class Folder implements Entity<int> {
-  final int id;
+  final int? id;
   final String title;
 
   Folder({
-    required this.id,
+    this.id,
     required this.title,
   });
 
