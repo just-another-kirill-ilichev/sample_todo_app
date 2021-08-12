@@ -5,6 +5,7 @@ import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/domain/db_service.dart';
 import 'package:sample_todo_app/domain/log_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
+import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
 
 import 'config/app_settings.dart';
@@ -37,6 +38,11 @@ class TodoApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider.value(value: _dbService),
+        ChangeNotifierProxyProvider<DbService, FoldersChangeNotifier>(
+          create: (ctx) =>
+              FoldersChangeNotifier(Provider.of<DbService>(ctx, listen: false)),
+          update: (ctx, service, __) => FoldersChangeNotifier(service),
+        ),
         ChangeNotifierProxyProvider<DbService, TodoList>(
           create: (ctx) => TodoList(Provider.of<DbService>(ctx, listen: false)),
           update: (ctx, service, __) => TodoList(service),
@@ -72,7 +78,7 @@ class TodoApp extends StatelessWidget {
             contentPadding: const EdgeInsets.all(16),
           ),
         ),
-        initialRoute: AppRoute.todo_list,
+        initialRoute: AppRoute.folder_list,
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );
