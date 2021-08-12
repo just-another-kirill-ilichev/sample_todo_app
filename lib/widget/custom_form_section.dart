@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class FormFieldWrapper extends StatelessWidget {
-  final Widget title;
-  final Widget field;
+class CustomFormSection extends StatelessWidget {
+  final Widget title, field;
 
-  const FormFieldWrapper({
+  const CustomFormSection({
     Key? key,
     required this.title,
     required this.field,
