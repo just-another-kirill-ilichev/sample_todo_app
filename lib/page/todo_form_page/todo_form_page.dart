@@ -5,8 +5,8 @@ import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/page/todo_form_page/form_field_wrapper.dart';
 import 'package:sample_todo_app/page/todo_form_page/todo_form_state.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
+import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/date_time_field.dart';
-import 'package:sample_todo_app/widget/save_dialog.dart';
 
 class TodoFormPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -26,48 +26,21 @@ class TodoFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: WillPopScope(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 200,
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    if (_save(context)) Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.save),
-                )
-              ],
-              pinned: true,
-              backgroundColor: Theme.of(context).canvasColor,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text(_formState.mode == TodoFormMode.edit
-                    ? 'Редактировать'
-                    : 'Добавить'),
-              ),
-            ),
-            SliverFillRemaining(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTitleField(),
-                      _buildDescriptionField(),
-                      _buildNotificationDateTimeField(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+    return CustomFormScaffold(
+      title: Text(
+          _formState.mode == TodoFormMode.edit ? 'Редактировать' : 'Добавить'),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTitleField(),
+            _buildDescriptionField(),
+            _buildNotificationDateTimeField(),
           ],
         ),
-        onWillPop: () => _onWillPop(context),
       ),
+      saveFormCallback: _save,
     );
   }
 
@@ -115,21 +88,7 @@ class TodoFormPage extends StatelessWidget {
     );
   }
 
-  Future<bool> _onWillPop(BuildContext context) async {
-    SaveDialogResult result =
-        await showPlatformSaveDialog(context, (_) => SaveDialog());
-
-    switch (result) {
-      case SaveDialogResult.save:
-        return _save(context);
-      case SaveDialogResult.discard:
-        return true;
-      case SaveDialogResult.cancel:
-        return false;
-    }
-  }
-
-  bool _save(BuildContext context) {
+  Future<bool> _save(BuildContext context) async {
     var validationResult = _formKey.currentState?.validate() ?? false;
 
     if (!validationResult) {
@@ -137,7 +96,8 @@ class TodoFormPage extends StatelessWidget {
     }
 
     _formKey.currentState?.save();
-    Provider.of<TodoList>(context, listen: false).save(_formState.toModel());
+    await Provider.of<TodoList>(context, listen: false)
+        .save(_formState.toModel());
 
     return true;
   }

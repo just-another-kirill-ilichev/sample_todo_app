@@ -19,7 +19,7 @@ class CustomListTile extends StatelessWidget {
     var primary = Theme.of(context).primaryColor;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -56,7 +56,6 @@ class CustomListTile extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
               DefaultTextStyle(
                 style: TextStyle(color: Colors.black45),
                 child: trailing,

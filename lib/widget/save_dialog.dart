@@ -19,26 +19,30 @@ Future<SaveDialogResult> showPlatformSaveDialog(
 }
 
 class SaveDialog extends StatelessWidget {
-  const SaveDialog({Key? key}) : super(key: key);
+  final String title, description;
+
+  const SaveDialog({
+    Key? key,
+    required this.title,
+    required this.description,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var platform = Theme.of(context).platform;
-    var title = Text('Save?');
-    var content = Text('Save...');
 
     if (platform == TargetPlatform.iOS) {
       return CupertinoAlertDialog(
-        title: title,
-        content: content,
+        title: Text(title),
+        content: Text(description),
         actions: SaveDialogResult.values
             .map((e) => _buildCupertinoAction(context, e))
             .toList(),
       );
     } else {
       return AlertDialog(
-        title: title,
-        content: content,
+        title: Text(title),
+        content: Text(description),
         actions: SaveDialogResult.values
             .map((e) => _buildMaterialAction(context, e))
             .toList(),

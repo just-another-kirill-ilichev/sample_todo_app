@@ -4,32 +4,24 @@ import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/page/todo_list_page/custom_fab.dart';
 import 'package:sample_todo_app/page/todo_list_page/todo_tile.dart';
 import 'package:sample_todo_app/state/todo_list.dart';
+import 'package:sample_todo_app/widget/custom_scaffold.dart';
 
 class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<TodoList>(
-        builder: (ctx, todos, ___) => CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 200,
-              pinned: true,
-              backgroundColor: Theme.of(ctx).canvasColor,
-              flexibleSpace: FlexibleSpaceBar(title: Text('Список')),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (ctx, idx) => TodoTile(todo: todos.items[idx]),
-                childCount: todos.items.length,
-              ),
-            ),
-          ],
+    return Consumer<TodoList>(
+      builder: (ctx, todos, ___) => CustomScaffold(
+        title: Text('Список'),
+        body: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (ctx, idx) => TodoTile(todo: todos.items[idx]),
+            childCount: todos.items.length,
+          ),
         ),
-      ),
-      floatingActionButton: CustomFab(
-        onPressed: () => Navigator.pushNamed(context, AppRoute.add_todo),
-        icon: Icon(Icons.add),
+        floatingActionButton: CustomFab(
+          onPressed: () => Navigator.pushNamed(context, AppRoute.add_todo),
+          icon: Icon(Icons.add),
+        ),
       ),
     );
   }
