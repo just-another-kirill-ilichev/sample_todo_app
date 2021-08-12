@@ -2,15 +2,16 @@ import 'package:sample_todo_app/config/app_schema.dart';
 import 'package:sample_todo_app/domain/db_connection.dart';
 import 'package:sample_todo_app/domain/repository/generic/base_sql_repository.dart';
 import 'package:sample_todo_app/domain/repository/generic/serializer.dart';
+import 'package:sample_todo_app/domain/repository/specific/todo_sql_repository.dart';
 import 'package:sample_todo_app/model/folder.dart';
 import 'package:sample_todo_app/model/todo.dart';
 
 class DbService {
   final DbConnection _connection;
-  late BaseSqlRepository<Todo> _todoRepository;
+  late TodoSqlRepository _todoRepository;
   late BaseSqlRepository<Folder> _folderRepository;
 
-  BaseSqlRepository<Todo> get todoRepository => _todoRepository;
+  TodoSqlRepository get todoRepository => _todoRepository;
   BaseSqlRepository<Folder> get folderRepository => _folderRepository;
 
   DbService()
@@ -22,7 +23,7 @@ class DbService {
   Future<void> initialize() async {
     await _connection.initializeDb();
 
-    _todoRepository = BaseSqlRepository<Todo>(
+    _todoRepository = TodoSqlRepository(
       AppSchema.todos.tableName,
       Serializer((item) => item.toMap(), (data) => Todo.fromMap(data)),
       _connection,
