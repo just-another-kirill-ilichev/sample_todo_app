@@ -63,6 +63,8 @@ class CustomSelector<T> extends StatelessWidget {
   }
 
   Future<void> _select(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+
     var result = await showDialog<T>(
       context: context,
       builder: (ctx) => _CustomSelectorDialog<T>(

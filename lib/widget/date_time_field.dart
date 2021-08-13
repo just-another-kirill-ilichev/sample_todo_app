@@ -53,6 +53,7 @@ class DateTimeField extends StatelessWidget {
   }
 
   void _selectDate(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     var date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -66,6 +67,7 @@ class DateTimeField extends StatelessWidget {
   }
 
   void _selectTime(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     var time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay(hour: 12, minute: 0),
