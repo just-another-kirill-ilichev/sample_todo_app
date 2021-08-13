@@ -92,6 +92,8 @@ class TodoFormPage extends StatelessWidget {
       title: Text('Описание'),
       field: TextFormField(
         maxLines: 5,
+        keyboardType: TextInputType.multiline,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.description_outlined, color: Colors.amber),
           hintText: 'Описание',
@@ -108,6 +110,8 @@ class TodoFormPage extends StatelessWidget {
     return CustomFormSection(
       title: Text('Название'),
       field: TextFormField(
+        keyboardType: TextInputType.text,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.title_outlined, color: Colors.amber),
           hintText: 'Название',

@@ -21,6 +21,8 @@ class FolderFormPage extends StatelessWidget {
           CustomFormSection(
             title: Text('Название'),
             field: TextFormField(
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.sentences,
               initialValue: _formState.title,
               onSaved: (value) => _formState.title = value,
               validator: (value) =>
