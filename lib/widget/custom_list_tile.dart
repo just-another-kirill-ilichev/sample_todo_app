@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomListTile extends StatelessWidget {
   final VoidCallback? onTap;
-  final Widget? leading;
-  final Widget title, subtitle, trailing;
+  final Widget? leading, trailing;
+  final Widget title, subtitle;
 
   const CustomListTile({
     Key? key,
@@ -11,7 +11,7 @@ class CustomListTile extends StatelessWidget {
     this.leading,
     required this.title,
     required this.subtitle,
-    required this.trailing,
+    this.trailing,
   }) : super(key: key);
 
   @override
@@ -56,10 +56,11 @@ class CustomListTile extends StatelessWidget {
                   ],
                 ),
               ),
-              DefaultTextStyle(
-                style: TextStyle(color: Colors.black45),
-                child: trailing,
-              ),
+              if (trailing != null)
+                DefaultTextStyle(
+                  style: TextStyle(color: Colors.black45),
+                  child: trailing!,
+                ),
             ],
           ),
         ),

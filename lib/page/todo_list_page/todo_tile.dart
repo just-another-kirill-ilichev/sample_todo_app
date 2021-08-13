@@ -30,7 +30,7 @@ class TodoTile extends StatelessWidget {
         ),
         subtitle:
             Text(AppSettings.dateTimeFormat.format(todo.notificationDateTime)),
-        trailing: CustomCheckbox(
+        leading: CustomCheckbox(
           onChanged: (value) => _setFinished(context, value),
           value: todo.finished,
         ),
