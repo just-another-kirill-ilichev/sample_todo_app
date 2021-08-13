@@ -20,7 +20,6 @@ class CustomScaffold extends StatelessWidget {
         SliverAppBar(
           expandedHeight: 200,
           actions: actions,
-          backgroundColor: Theme.of(context).canvasColor,
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             title: title,

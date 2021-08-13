@@ -55,6 +55,10 @@ class TodoApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.amber,
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            backgroundColor: ThemeData.light().canvasColor,
+          ),
           inputDecorationTheme: InputDecorationTheme(
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.transparent),
