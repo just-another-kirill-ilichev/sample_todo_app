@@ -14,12 +14,17 @@ class TableSchema {
 
   String getCreationScript() {
     var script = 'CREATE TABLE main.$tableName(' +
-        fields.map((e) => e.createSqlDefinition()).join(', ') +
-        fields
-            .map((e) => e.createForeignKeyDefinition())
-            .where((e) => e.isNotEmpty)
-            .join(', ') +
-        ')';
+        fields.map((e) => e.createSqlDefinition()).join(', ');
+    var foreignKeys = fields
+        .map((e) => e.createForeignKeyDefinition())
+        .where((e) => e.isNotEmpty)
+        .join(', ');
+
+    if (foreignKeys.isNotEmpty) {
+      script += ', ' + foreignKeys;
+    }
+
+    script += ')';
 
     return script;
   }
