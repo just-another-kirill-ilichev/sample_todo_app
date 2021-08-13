@@ -14,7 +14,11 @@ Future<SaveDialogResult> showPlatformSaveDialog(
   if (platform == TargetPlatform.iOS) {
     return await showCupertinoDialog(context: context, builder: builder);
   } else {
-    return await showDialog(context: context, builder: builder);
+    return await showDialog(
+      context: context,
+      builder: builder,
+      barrierDismissible: false,
+    );
   }
 }
 
