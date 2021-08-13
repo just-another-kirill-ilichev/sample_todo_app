@@ -34,6 +34,7 @@ class TodoFormState {
       folderId: todo.folderId,
       description: todo.description,
       notificationDateTime: todo.notificationDateTime,
+      finished: todo.finished,
     );
   }
 

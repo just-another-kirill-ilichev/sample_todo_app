@@ -9,6 +9,7 @@ import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/custom_form_section.dart';
+import 'package:sample_todo_app/widget/custom_selector.dart';
 import 'package:sample_todo_app/widget/date_time_field.dart';
 
 class TodoFormPage extends StatelessWidget {
@@ -59,14 +60,17 @@ class TodoFormPage extends StatelessWidget {
             ..onTap = () => Navigator.pushNamed(context, AppRoute.add_folder),
         ),
       ),
-      field: DropdownButtonFormField<int?>(
-        value: _formState.folderId,
+      field: CustomSelectorFormField<int>(
+        dialogTitle: 'Выберите папку',
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.folder_outlined, color: Colors.amber),
+        ),
+        initialValue: _formState.folderId,
         items: Provider.of<FoldersChangeNotifier>(context)
             .items
-            .map((e) => DropdownMenuItem(child: Text(e.title), value: e.id))
+            .map((e) => CustomSelectorItem(child: Text(e.title), value: e.id))
             .toList()
-              ..add(DropdownMenuItem(child: Text('Не указано'), value: null)),
-        onChanged: (value) => _formState.folderId = value,
+              ..add(CustomSelectorItem(child: Text('Не указано'), value: null)),
         onSaved: (value) => _formState.folderId = value,
       ),
     );
