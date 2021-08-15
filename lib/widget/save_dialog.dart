@@ -61,15 +61,8 @@ class SaveDialog extends StatelessWidget {
   }
 
   Widget _buildMaterialAction(BuildContext context, SaveDialogResult result) {
-    var textStyle = TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-      letterSpacing: 1.25,
-      color: Theme.of(context).accentColor,
-    );
-
     return TextButton(
-      child: Text(_getText(result).toUpperCase(), style: textStyle),
+      child: Text(_getText(result).toUpperCase()),
       onPressed: () => Navigator.pop(context, result),
     );
   }

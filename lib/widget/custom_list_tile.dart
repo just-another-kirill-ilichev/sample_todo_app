@@ -23,8 +23,6 @@ class CustomListTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
-        highlightColor: primary.withOpacity(0.2),
-        splashColor: primary.withOpacity(0.1),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),

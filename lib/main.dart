@@ -55,6 +55,8 @@ class TodoApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.amber,
+          highlightColor: Colors.amber.withOpacity(0.1),
+          splashColor: Colors.amber.withOpacity(0.1),
           appBarTheme: AppBarTheme(
             elevation: 0,
             backgroundColor: ThemeData.light().canvasColor,
@@ -83,6 +85,21 @@ class TodoApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             contentPadding: const EdgeInsets.all(16),
+          ),
+          dialogTheme: DialogTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                letterSpacing: 1.25,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
           ),
         ),
         initialRoute: AppRoute.folder_list,
