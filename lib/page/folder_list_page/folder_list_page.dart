@@ -35,11 +35,7 @@ class FolderListPage extends StatelessWidget {
     return FolderTile(
       icon: Icon(Icons.list_outlined),
       title: Text('Все'),
-      onTap: () async {
-        Provider.of<TodoChangeNotifier>(context, listen: false)
-            .setFilter(TodoFilter());
-        await Navigator.pushNamed(context, AppRoute.todo_list);
-      },
+      filter: TodoFilter(),
       count: 1,
     );
   }
@@ -48,11 +44,7 @@ class FolderListPage extends StatelessWidget {
     return FolderTile(
       icon: Icon(Icons.calendar_today_outlined),
       title: Text('Сегодня'),
-      onTap: () async {
-        Provider.of<TodoChangeNotifier>(context, listen: false)
-            .setFilter(TodoFilter(date: DateTime.now()));
-        await Navigator.pushNamed(context, AppRoute.todo_list);
-      },
+      filter: TodoFilter(date: DateTime.now()),
       count: 1,
     );
   }
@@ -61,11 +53,7 @@ class FolderListPage extends StatelessWidget {
     return FolderTile(
       icon: Icon(Icons.folder_outlined, color: Colors.green),
       title: Text(folder.title),
-      onTap: () async {
-        Provider.of<TodoChangeNotifier>(context, listen: false)
-            .setFilter(TodoFilter(folderId: folder.id));
-        await Navigator.pushNamed(context, AppRoute.todo_list);
-      },
+      filter: TodoFilter(folderId: folder.id),
       count: 1,
     );
   }
