@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_todo_app/widget/custom_selector/custom_selector_action_sheet.dart';
+import 'package:sample_todo_app/widget/custom_selector/custom_selector_dialog.dart';
 
 class CustomSelectorItem<T> {
   final T? value;
@@ -65,43 +68,29 @@ class CustomSelector<T> extends StatelessWidget {
   Future<void> _select(BuildContext context) async {
     FocusScope.of(context).unfocus();
 
-    var result = await showDialog<T>(
-      context: context,
-      builder: (ctx) => _CustomSelectorDialog<T>(
-        items: items,
-        title: dialogTitle,
-      ),
-    );
+    var platform = Theme.of(context).platform;
+    T? result;
+
+    if (platform == TargetPlatform.iOS) {
+      result = await showCupertinoModalPopup(
+        context: context,
+        builder: (ctx) => CustomSelectorActionSheet<T>(
+          title: dialogTitle,
+          items: items,
+          value: value,
+        ),
+      );
+    } else {
+      result = await showDialog<T>(
+        context: context,
+        builder: (ctx) => CustomSelectorDialog<T>(
+          items: items,
+          title: dialogTitle,
+          value: value,
+        ),
+      );
+    }
 
     onChanged(result);
-  }
-}
-
-class _CustomSelectorDialog<T> extends StatelessWidget {
-  final String title;
-  final List<CustomSelectorItem<T>> items;
-
-  const _CustomSelectorDialog({
-    Key? key,
-    required this.items,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SimpleDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: Center(child: Text(title)),
-      contentPadding: const EdgeInsets.all(16),
-      children: items.map((e) => _buildItem(context, e)).toList(),
-    );
-  }
-
-  Widget _buildItem(BuildContext context, CustomSelectorItem<T> item) {
-    return SimpleDialogOption(
-      padding: const EdgeInsets.all(16),
-      child: item.child,
-      onPressed: () => Navigator.pop(context, item.value),
-    );
   }
 }

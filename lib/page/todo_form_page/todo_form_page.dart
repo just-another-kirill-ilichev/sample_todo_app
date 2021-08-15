@@ -9,7 +9,7 @@ import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/custom_form_section.dart';
-import 'package:sample_todo_app/widget/custom_selector.dart';
+import 'package:sample_todo_app/widget/custom_selector/custom_selector.dart';
 import 'package:sample_todo_app/widget/date_time_field.dart';
 
 class TodoFormPage extends StatelessWidget {
