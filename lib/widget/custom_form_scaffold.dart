@@ -9,7 +9,6 @@ class CustomFormScaffold extends StatelessWidget {
   final SaveFormCallback saveFormCallback;
   final bool showDialog;
   final String dialogTitle;
-  final String dialogDescription;
 
   const CustomFormScaffold({
     Key? key,
@@ -18,7 +17,6 @@ class CustomFormScaffold extends StatelessWidget {
     required this.saveFormCallback,
     this.showDialog = true,
     this.dialogTitle = 'Сохранить изменения?',
-    this.dialogDescription = 'Описание',
   }) : super(key: key);
 
   @override
@@ -47,7 +45,7 @@ class CustomFormScaffold extends StatelessWidget {
 
     SaveDialogResult result = await showPlatformSaveDialog(
       context,
-      (_) => SaveDialog(title: dialogTitle, description: dialogDescription),
+      (_) => SaveDialog(title: dialogTitle),
     );
 
     switch (result) {

@@ -23,12 +23,11 @@ Future<SaveDialogResult> showPlatformSaveDialog(
 }
 
 class SaveDialog extends StatelessWidget {
-  final String title, description;
+  final String title;
 
   const SaveDialog({
     Key? key,
     required this.title,
-    required this.description,
   }) : super(key: key);
 
   @override
@@ -38,7 +37,6 @@ class SaveDialog extends StatelessWidget {
     if (platform == TargetPlatform.iOS) {
       return CupertinoAlertDialog(
         title: Text(title),
-        content: Text(description),
         actions: SaveDialogResult.values
             .map((e) => _buildCupertinoAction(context, e))
             .toList(),
@@ -46,7 +44,7 @@ class SaveDialog extends StatelessWidget {
     } else {
       return AlertDialog(
         title: Text(title),
-        content: Text(description),
+        buttonPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
         actions: SaveDialogResult.values
             .map((e) => _buildMaterialAction(context, e))
             .toList(),
@@ -63,13 +61,15 @@ class SaveDialog extends StatelessWidget {
   }
 
   Widget _buildMaterialAction(BuildContext context, SaveDialogResult result) {
+    var textStyle = TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+      letterSpacing: 1.25,
+      color: Theme.of(context).accentColor,
+    );
+
     return TextButton(
-      child: Text(
-        _getText(result),
-        style: TextStyle(
-          color: result == SaveDialogResult.discard ? Colors.red : Colors.blue,
-        ),
-      ),
+      child: Text(_getText(result).toUpperCase(), style: textStyle),
       onPressed: () => Navigator.pop(context, result),
     );
   }
@@ -77,11 +77,11 @@ class SaveDialog extends StatelessWidget {
   String _getText(SaveDialogResult result) {
     switch (result) {
       case SaveDialogResult.save:
-        return 'Save';
+        return 'Сохранить';
       case SaveDialogResult.discard:
-        return 'Discard';
+        return 'Не сохранять';
       case SaveDialogResult.cancel:
-        return 'Cancel';
+        return 'Отмена';
     }
   }
 }
