@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/page/folder_form_page/folder_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
+import 'package:sample_todo_app/widget/custom_color_picker.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/custom_form_section.dart';
 
@@ -29,6 +30,29 @@ class FolderFormPage extends StatelessWidget {
                   value?.isEmpty ?? true ? 'Заполните это поле' : null,
             ),
           ),
+          CustomFormSection(
+            title: Text('Описание'),
+            field: TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: 5,
+              textCapitalization: TextCapitalization.sentences,
+              initialValue: _formState.description,
+              onSaved: (value) => _formState.description = value,
+              validator: (value) =>
+                  value?.isEmpty ?? true ? 'Заполните это поле' : null,
+            ),
+          ),
+          IconButton(
+            onPressed: () async {
+              _formState.color = await showDialog(
+                context: context,
+                builder: (_) => CustomColorPicker(
+                  initialValue: _formState.color!,
+                ),
+              );
+            },
+            icon: Icon(Icons.colorize),
+          )
         ]),
       ),
       saveFormCallback: (_) async => await _save(context),
