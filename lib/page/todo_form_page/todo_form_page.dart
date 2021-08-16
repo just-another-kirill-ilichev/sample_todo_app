@@ -61,7 +61,7 @@ class TodoFormPage extends StatelessWidget {
         ),
       ),
       field: CustomSelectorFormField<int>(
-        dialogTitle: 'Выберите папку',
+        title: 'Выберите папку',
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.folder_outlined, color: Colors.amber),
         ),

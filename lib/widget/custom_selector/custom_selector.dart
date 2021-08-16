@@ -16,7 +16,7 @@ class CustomSelectorFormField<T> extends FormField<T> {
     required List<CustomSelectorItem<T>> items,
     FormFieldValidator<T>? validator,
     required T? initialValue,
-    required String dialogTitle,
+    required String title,
     InputDecoration? decoration,
   }) : super(
           initialValue: initialValue,
@@ -28,18 +28,18 @@ class CustomSelectorFormField<T> extends FormField<T> {
               items: items,
               onChanged: state.didChange,
               decoration: decoration,
-              dialogTitle: dialogTitle,
+              title: title,
             );
           },
         );
 }
 
 class CustomSelector<T> extends StatelessWidget {
+  final String title;
   final List<CustomSelectorItem<T>> items;
   final T? value;
   final ValueChanged<T?> onChanged;
   final InputDecoration? decoration;
-  final String dialogTitle;
 
   const CustomSelector({
     Key? key,
@@ -47,7 +47,7 @@ class CustomSelector<T> extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.decoration,
-    required this.dialogTitle,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -74,8 +74,8 @@ class CustomSelector<T> extends StatelessWidget {
     if (platform == TargetPlatform.iOS) {
       result = await showCupertinoModalPopup(
         context: context,
-        builder: (ctx) => CustomSelectorActionSheet<T>(
-          title: dialogTitle,
+        builder: (_) => CustomSelectorActionSheet<T>(
+          title: title,
           items: items,
           value: value,
         ),
@@ -83,9 +83,9 @@ class CustomSelector<T> extends StatelessWidget {
     } else {
       result = await showDialog<T>(
         context: context,
-        builder: (ctx) => CustomSelectorDialog<T>(
+        builder: (_) => CustomSelectorDialog(
+          title: title,
           items: items,
-          title: dialogTitle,
           value: value,
         ),
       );
