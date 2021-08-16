@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomColorPicker extends StatefulWidget {
+class ColorPicker extends StatefulWidget {
   final int initialValue;
   final List<int> palette;
 
-  const CustomColorPicker({
+  const ColorPicker({
     Key? key,
     required this.initialValue,
     this.palette = const [
@@ -17,10 +17,10 @@ class CustomColorPicker extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomColorPickerState createState() => _CustomColorPickerState();
+  _ColorPickerState createState() => _ColorPickerState();
 }
 
-class _CustomColorPickerState extends State<CustomColorPicker> {
+class _ColorPickerState extends State<ColorPicker> {
   late int _value;
 
   @override

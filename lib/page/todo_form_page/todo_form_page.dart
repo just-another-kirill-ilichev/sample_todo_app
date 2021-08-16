@@ -7,6 +7,7 @@ import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/page/todo_form_page/todo_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
+import 'package:sample_todo_app/widget/clickable_text.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/custom_form_section.dart';
 import 'package:sample_todo_app/widget/custom_selector/custom_selector.dart';
@@ -52,13 +53,9 @@ class TodoFormPage extends StatelessWidget {
   Widget _buildFolder(BuildContext context) {
     return CustomFormSection(
       title: Text('Папка'),
-      action: RichText(
-        text: TextSpan(
-          style: TextStyle(color: Theme.of(context).accentColor),
-          text: 'Добавить',
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => Navigator.pushNamed(context, AppRoute.add_folder),
-        ),
+      action: ClickableText(
+        text: 'Добавить',
+        onTap: () => Navigator.pushNamed(context, AppRoute.add_folder),
       ),
       field: CustomSelectorFormField<int>(
         title: 'Выберите папку',
