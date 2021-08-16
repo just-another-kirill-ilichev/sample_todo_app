@@ -24,6 +24,7 @@ class AppSchema {
     migrations: [
       Migration(version: 2, script: "ALTER TABLE todos ADD folder TEXT"),
       Migration(version: 3, isBreakingChange: true),
+      Migration(version: 4, isBreakingChange: true),
     ],
   );
 
@@ -32,9 +33,12 @@ class AppSchema {
     fields: [
       Field(name: 'id', type: FieldType.integer, isPrimaryKey: true),
       Field(name: 'title', type: FieldType.text),
+      Field(name: 'description', type: FieldType.text),
+      Field(name: 'color', type: FieldType.integer),
     ],
     migrations: [
       Migration(version: 3, isBreakingChange: true),
+      Migration(version: 4, isBreakingChange: true),
     ],
   );
 }
