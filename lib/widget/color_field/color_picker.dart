@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:sample_todo_app/widget/color_field/color_tile.dart';
 
 class ColorPicker extends StatefulWidget {
-  final int initialValue;
-  final List<int> palette;
+  final Color? initialValue;
+  final List<Color> palette;
 
   const ColorPicker({
     Key? key,
     required this.initialValue,
     this.palette = const [
-      0xffffbe0b,
-      0xfffb5607,
-      0xffff006e,
-      0xff8338ec,
-      0xff3a86ff,
+      Color(0xffffbe0b),
+      Color(0xfffb5607),
+      Color(0xffff006e),
+      Color(0xff8338ec),
+      Color(0xff3a86ff),
     ],
   }) : super(key: key);
 
@@ -21,7 +22,7 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  late int _value;
+  late Color? _value;
 
   @override
   void initState() {
@@ -49,28 +50,11 @@ class _ColorPickerState extends State<ColorPicker> {
     );
   }
 
-  Widget _buildColorTile(int color) {
-    return InkWell(
+  Widget _buildColorTile(Color color) {
+    return ColorTile(
+      value: color,
+      selected: color == _value,
       onTap: () => setState(() => _value = color),
-      borderRadius: BorderRadius.circular(32),
-      child: Container(
-        width: 48,
-        height: 48,
-        margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          border: _value == color
-              ? Border.all(color: Color(color), width: 2)
-              : Border.all(color: Colors.transparent),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            color: Color(color),
-          ),
-        ),
-      ),
     );
   }
 }

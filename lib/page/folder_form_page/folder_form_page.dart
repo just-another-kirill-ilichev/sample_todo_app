@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/page/folder_form_page/folder_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
-import 'package:sample_todo_app/widget/clickable_text.dart';
 import 'package:sample_todo_app/widget/color_field/color_field.dart';
-import 'package:sample_todo_app/widget/color_field/color_picker.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/custom_form_section.dart';
 
@@ -34,20 +32,20 @@ class FolderFormPage extends StatelessWidget {
           ),
           CustomFormSection(
             title: Text('Цвет'),
-            action: ClickableText(
-              text: 'Выбрать',
-              onTap: () async {
-                _formState.color = await showDialog(
-                  context: context,
-                  builder: (_) => ColorPicker(
-                    initialValue: _formState.color!,
-                  ),
-                );
-              },
-            ),
+            // TODO: Update FormField value when color set by picker
+            // action: ClickableText(
+            //   text: 'Выбрать',
+            //   onTap: () async {
+            //     _formState.color = await showDialog(
+            //       context: context,
+            //       builder: (_) => ColorPicker(
+            //         initialValue: _formState.color,
+            //       ),
+            //     );
+            //   },
+            // ),
             field: ColorFormField(
-              initialValue:
-                  _formState.color != null ? Color(_formState.color!) : null,
+              initialValue: _formState.color ?? Color(0xffffbe0b),
               palette: [
                 Color(0xffffbe0b),
                 Color(0xfffb5607),
@@ -55,7 +53,7 @@ class FolderFormPage extends StatelessWidget {
                 Color(0xff8338ec),
                 Color(0xff3a86ff),
               ],
-              onSaved: (value) => _formState.color = value?.value,
+              onSaved: (value) => _formState.color = value,
             ),
           ),
           CustomFormSection(
