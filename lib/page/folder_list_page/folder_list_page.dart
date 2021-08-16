@@ -35,6 +35,7 @@ class FolderListPage extends StatelessWidget {
     return FolderTile(
       icon: Icon(Icons.list_outlined),
       title: Text('Все'),
+      description: Text('Все задачи'),
       filter: TodoFilter(),
       count: 1,
     );
@@ -44,6 +45,7 @@ class FolderListPage extends StatelessWidget {
     return FolderTile(
       icon: Icon(Icons.calendar_today_outlined),
       title: Text('Сегодня'),
+      description: Text('Задачи на сегодня'),
       filter: TodoFilter(date: DateTime.now()),
       count: 1,
     );
@@ -51,8 +53,9 @@ class FolderListPage extends StatelessWidget {
 
   Widget _buildFolder(BuildContext context, Folder folder) {
     return FolderTile(
-      icon: Icon(Icons.folder_outlined, color: Colors.green),
+      icon: Icon(Icons.folder_outlined, color: Color(folder.color)),
       title: Text(folder.title),
+      description: Text(folder.description),
       filter: TodoFilter(folderId: folder.id),
       count: 1,
     );

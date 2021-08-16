@@ -5,7 +5,7 @@ import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_list_tile.dart';
 
 class FolderTile extends StatelessWidget {
-  final Widget icon, title;
+  final Widget icon, title, description;
   final TodoFilter filter;
   final int count;
 
@@ -13,6 +13,7 @@ class FolderTile extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.title,
+    required this.description,
     required this.count,
     required this.filter,
   }) : super(key: key);
@@ -24,7 +25,7 @@ class FolderTile extends StatelessWidget {
     return CustomListTile(
       title: title,
       leading: IconTheme(data: IconThemeData(color: primary), child: icon),
-      subtitle: Text('Fdsfkskfghrkjgjrvgbrkjbgkjere'),
+      subtitle: description,
       trailing: Text(count.toString()),
       onTap: () => _onTap(context),
     );
