@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
+import 'package:sample_todo_app/domain/db_service.dart';
 import 'package:sample_todo_app/model/meta_folder.dart';
+import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_list_tile.dart';
@@ -17,6 +19,7 @@ class FolderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accent = Theme.of(context).accentColor;
+    var dbService = Provider.of<DbService>(context);
     Widget title, description, icon;
 
     switch (metaFolder.type) {
@@ -44,7 +47,10 @@ class FolderTile extends StatelessWidget {
       title: title,
       leading: icon,
       subtitle: description,
-      trailing: Text(1.toString()),
+      trailing: FutureBuilder<List<Todo>>(
+        future: dbService.todoRepository.fetchByMetaFolder(metaFolder),
+        builder: (ctx, snapshot) => Text('${snapshot.data?.length ?? 0}'),
+      ),
       onTap: () => _onTap(context),
     );
 
