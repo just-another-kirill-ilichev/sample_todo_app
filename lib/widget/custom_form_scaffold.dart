@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sample_todo_app/widget/custom_scaffold.dart';
-import 'package:sample_todo_app/widget/save_dialog.dart';
+import 'package:sample_todo_app/widget/dialog/platform_dialog.dart';
+import 'package:sample_todo_app/widget/dialog/save_dialog.dart';
 
 typedef Future<bool> SaveFormCallback(BuildContext context);
 
@@ -43,12 +44,12 @@ class CustomFormScaffold extends StatelessWidget {
       return await saveFormCallback(context);
     }
 
-    SaveDialogResult result = await showPlatformSaveDialog(
+    var result = await showPlatformDialog<SaveDialogResult>(
       context,
       (_) => SaveDialog(title: dialogTitle),
     );
 
-    switch (result) {
+    switch (result ?? SaveDialogResult.cancel) {
       case SaveDialogResult.save:
         return await saveFormCallback(context);
       case SaveDialogResult.discard:
