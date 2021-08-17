@@ -18,11 +18,7 @@ class TodoChangeNotifier
 
   @override
   Future<void> update() async {
-    internal = await repository.fetchByFolderIdAndDate(
-      folderId: _folder.folder?.id,
-      date: _folder.type == MetaFolderType.today ? DateTime.now() : null,
-      orderBy: 'finished',
-    );
+    internal = await repository.fetchByMetaFolder(_folder);
     notifyListeners();
   }
 }

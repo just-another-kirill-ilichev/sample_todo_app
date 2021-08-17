@@ -1,6 +1,7 @@
 import 'package:sample_todo_app/domain/db_connection.dart';
 import 'package:sample_todo_app/domain/repository/generic/base_sql_repository.dart';
 import 'package:sample_todo_app/domain/repository/generic/serializer.dart';
+import 'package:sample_todo_app/model/meta_folder.dart';
 import 'package:sample_todo_app/model/todo.dart';
 
 class TodoSqlRepository extends BaseSqlRepository<Todo> {
@@ -10,36 +11,40 @@ class TodoSqlRepository extends BaseSqlRepository<Todo> {
     DbConnection connection,
   ) : super(table, serializer, connection);
 
-  Future<List<Todo>> fetchByFolderIdAndDate({
-    int? folderId,
-    DateTime? date,
+  Future<List<Todo>> fetchByMetaFolder(
+    MetaFolder metaFolder, {
     String? orderBy,
   }) async {
-    var where = '';
-    var whereArgs = [];
+    List<Map<String, dynamic>> itemsData;
 
-    if (folderId == null && date == null) {
-      return await fetchAllOrderBy(orderBy);
+    switch (metaFolder.type) {
+      case MetaFolderType.folder:
+        return await fetchByFolderId(metaFolder.folder!.id!);
+      case MetaFolderType.all:
+        return await fetchAllOrderBy(orderBy);
+      case MetaFolderType.today:
+        return await fetchByDate(DateTime.now());
     }
+  }
 
-    if (folderId != null) {
-      where += 'folderId = ?';
-      whereArgs.add(folderId);
-    }
+  Future<List<Todo>> fetchByDate(DateTime date, {String? orderBy}) async {
+    var dateStr = date.toIso8601String();
+    var dateEnd = dateStr.indexOf('T');
+    dateStr = dateStr.substring(0, dateEnd).trim() + '%';
 
-    if (date != null) {
-      if (where.isNotEmpty) where += ' AND ';
-      where += 'notificationDateTime LIKE ?';
+    var itemsData = await connection.database.query(
+      table,
+      where: 'notificationDateTime LIKE ?',
+      whereArgs: [dateStr],
+      orderBy: orderBy,
+    );
 
-      var dateStr = date.toIso8601String();
-      var dateEnd = dateStr.indexOf('T');
-      dateStr = dateStr.substring(0, dateEnd).trim() + '%';
+    return serializer.deserializeMany(itemsData);
+  }
 
-      whereArgs.add(dateStr);
-    }
-
-    var itemsData = await connection.database
-        .query(table, where: where, whereArgs: whereArgs, orderBy: orderBy);
+  Future<List<Todo>> fetchByFolderId(int folderId, {String? orderBy}) async {
+    var itemsData = await connection.database.query(table,
+        where: 'folderId = ?', whereArgs: [folderId], orderBy: orderBy);
 
     return serializer.deserializeMany(itemsData);
   }
