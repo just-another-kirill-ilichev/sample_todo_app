@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
+import 'package:sample_todo_app/model/meta_folder.dart';
 import 'package:sample_todo_app/widget/custom_fab.dart';
 import 'package:sample_todo_app/page/todo_list_page/todo_tile.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
@@ -11,7 +12,7 @@ class TodoListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TodoChangeNotifier>(
       builder: (ctx, todos, ___) => CustomScaffold(
-        title: Text('Список'),
+        title: Text(_getTitle(todos.currentFolder)),
         body: SliverList(
           delegate: SliverChildBuilderDelegate(
             (ctx, idx) => TodoTile(todo: todos.items[idx]),
@@ -24,5 +25,16 @@ class TodoListPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getTitle(MetaFolder metaFolder) {
+    switch (metaFolder.type) {
+      case MetaFolderType.folder:
+        return metaFolder.folder!.title;
+      case MetaFolderType.all:
+        return 'Все';
+      case MetaFolderType.today:
+        return 'Сегодня';
+    }
   }
 }
