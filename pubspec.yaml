@@ -22,10 +22,16 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # widgets
+  sliver_tools: ^0.2.5
+
+  # state
   provider: ^5.0.0
 
+  # icons & fonts
   cupertino_icons: ^1.0.2
 
+  # misc
   path: ^1.8.0
   logging: ^1.0.1
   intl: ^0.17.0
@@ -35,10 +41,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
 
   # The following line ensures that the Material Icons font is
