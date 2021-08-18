@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
@@ -6,6 +7,8 @@ import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_checkbox.dart';
 import 'package:sample_todo_app/widget/custom_list_tile.dart';
+import 'package:sample_todo_app/widget/dialog/platform_dialog.dart';
+import 'package:sample_todo_app/widget/dialog/remove_dialog.dart';
 
 class TodoTile extends StatelessWidget {
   final Todo todo;
@@ -47,6 +50,14 @@ class TodoTile extends StatelessWidget {
         child: Icon(Icons.delete, color: accent, size: 32),
       ),
       onDismissed: (direction) => _remove(context),
+      confirmDismiss: (_) async => await _showRemoveDialog(context) ?? false,
+    );
+  }
+
+  Future<bool?> _showRemoveDialog(BuildContext context) async {
+    return await showPlatformDialog<bool>(
+      context: context,
+      builder: (ctx) => RemoveDialog(),
     );
   }
 

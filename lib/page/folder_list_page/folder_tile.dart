@@ -7,6 +7,8 @@ import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/custom_list_tile.dart';
+import 'package:sample_todo_app/widget/dialog/platform_dialog.dart';
+import 'package:sample_todo_app/widget/dialog/remove_dialog.dart';
 
 class FolderTile extends StatelessWidget {
   final MetaFolder metaFolder;
@@ -64,11 +66,19 @@ class FolderTile extends StatelessWidget {
           padding: EdgeInsets.only(right: 24),
           child: Icon(Icons.delete, color: accent, size: 32),
         ),
-        onDismissed: (direction) => _remove(context),
+        onDismissed: (_) => _remove(context),
+        confirmDismiss: (_) async => await _showRemoveDialog(context) ?? false,
       );
     }
 
     return widget;
+  }
+
+  Future<bool?> _showRemoveDialog(BuildContext context) async {
+    return await showPlatformDialog<bool>(
+      context: context,
+      builder: (ctx) => RemoveDialog(),
+    );
   }
 
   Future<void> _remove(BuildContext context) async {

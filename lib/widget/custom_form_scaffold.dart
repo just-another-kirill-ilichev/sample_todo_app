@@ -45,8 +45,8 @@ class CustomFormScaffold extends StatelessWidget {
     }
 
     var result = await showPlatformDialog<SaveDialogResult>(
-      context,
-      (_) => SaveDialog(title: dialogTitle),
+      context: context,
+      builder: (_) => SaveDialog(title: dialogTitle),
     );
 
     switch (result ?? SaveDialogResult.cancel) {

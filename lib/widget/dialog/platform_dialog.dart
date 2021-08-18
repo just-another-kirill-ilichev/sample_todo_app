@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<T?> showPlatformDialog<T>(
-  BuildContext context,
-  WidgetBuilder builder, {
+Future<T?> showPlatformDialog<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
   TargetPlatform? platform,
 }) async {
   platform ??= Theme.of(context).platform;
