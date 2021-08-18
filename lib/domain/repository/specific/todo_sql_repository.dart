@@ -15,8 +15,6 @@ class TodoSqlRepository extends BaseSqlRepository<Todo> {
     MetaFolder metaFolder, {
     String? orderBy,
   }) async {
-    List<Map<String, dynamic>> itemsData;
-
     switch (metaFolder.type) {
       case MetaFolderType.folder:
         return await fetchByFolderId(metaFolder.folder!.id!);
