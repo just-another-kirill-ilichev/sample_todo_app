@@ -26,9 +26,7 @@ class TodoTile extends StatelessWidget {
           todo.title,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: 20,
-            fontWeight: todo.finished ? FontWeight.normal : FontWeight.bold,
-            color: todo.finished ? Colors.grey : Colors.black,
+            color: todo.finished ? Colors.black26 : Colors.black,
           ),
         ),
         subtitle:

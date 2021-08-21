@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
@@ -60,6 +61,20 @@ class TodoApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             elevation: 0,
             backgroundColor: ThemeData.light().canvasColor,
+          ),
+          textTheme: GoogleFonts.ralewayTextTheme().copyWith(
+            bodyText2: GoogleFonts.raleway(color: Colors.black45),
+          ),
+          primaryTextTheme: GoogleFonts.ralewayTextTheme(),
+          accentTextTheme: GoogleFonts.ralewayTextTheme().copyWith(
+            subtitle1: GoogleFonts.raleway(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            subtitle2: GoogleFonts.raleway(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             enabledBorder: OutlineInputBorder(

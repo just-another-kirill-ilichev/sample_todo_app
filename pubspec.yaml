@@ -30,6 +30,7 @@ dependencies:
 
   # icons & fonts
   cupertino_icons: ^1.0.2
+  google_fonts: ^2.1.0
 
   # misc
   path: ^1.8.0
