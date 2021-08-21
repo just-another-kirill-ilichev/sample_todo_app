@@ -3,6 +3,7 @@ import 'package:sample_todo_app/model/folder.dart';
 import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/page/folder_form_page/folder_form_page.dart';
 import 'package:sample_todo_app/page/folder_list_page/folder_list_page.dart';
+import 'package:sample_todo_app/page/settings_page/settings_page.dart';
 import 'package:sample_todo_app/page/todo_form_page/todo_form_page.dart';
 import 'package:sample_todo_app/page/todo_list_page/todo_list_page.dart';
 
@@ -13,6 +14,7 @@ class AppRoute {
   static const add_folder = 'add_folder';
   static const edit_folder = 'edit_folder';
   static const folder_list = 'folder_list';
+  static const settings = 'settings';
 }
 
 class AppRouter {
@@ -34,6 +36,8 @@ class AppRouter {
         );
       case AppRoute.folder_list:
         return MaterialPageRoute(builder: (_) => FolderListPage());
+      case AppRoute.settings:
+        return MaterialPageRoute(builder: (_) => SettingsPage());
     }
   }
 }

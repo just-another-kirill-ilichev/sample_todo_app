@@ -7,6 +7,7 @@ import 'package:sample_todo_app/domain/db_service.dart';
 import 'package:sample_todo_app/domain/log_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
+import 'package:sample_todo_app/state/settings_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 
 import 'config/app_settings.dart';
@@ -51,6 +52,9 @@ class TodoApp extends StatelessWidget {
           update: (ctx, service, __) =>
               TodoChangeNotifier(service.todoRepository),
         ),
+        ChangeNotifierProvider<SettingsChangeNotifier>(
+          create: (_) => SettingsChangeNotifier(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

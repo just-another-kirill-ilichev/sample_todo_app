@@ -16,6 +16,12 @@ class FolderListPage extends StatelessWidget {
     return Consumer<FoldersChangeNotifier>(
       builder: (ctx, folders, ___) => CustomScaffold(
         title: Text('Списки'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, AppRoute.settings),
+          ),
+        ],
         body: MultiSliver(children: [
           SliverToBoxAdapter(
             child: FolderTile(
