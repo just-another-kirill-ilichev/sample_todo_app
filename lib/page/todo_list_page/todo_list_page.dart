@@ -13,6 +13,17 @@ class TodoListPage extends StatelessWidget {
     return Consumer<TodoChangeNotifier>(
       builder: (ctx, todos, ___) => CustomScaffold(
         title: Text(_getTitle(todos.currentFolder)),
+        actions: [
+          if (todos.currentFolder.type == MetaFolderType.folder)
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () => Navigator.pushNamed(
+                context,
+                AppRoute.edit_folder,
+                arguments: todos.currentFolder.folder,
+              ),
+            )
+        ],
         body: SliverList(
           delegate: SliverChildBuilderDelegate(
             (ctx, idx) => TodoTile(todo: todos.items[idx]),

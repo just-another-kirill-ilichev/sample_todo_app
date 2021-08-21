@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
 import 'package:sample_todo_app/model/todo.dart';
-import 'package:sample_todo_app/page/todo_form_page/todo_form_state.dart';
+import 'package:sample_todo_app/state/form/todo_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
+import 'package:sample_todo_app/state/form/entity_form_state.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
 import 'package:sample_todo_app/widget/form_section/form_section_action.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
@@ -31,8 +32,8 @@ class TodoFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomFormScaffold(
-      title: Text(
-          _formState.mode == TodoFormMode.edit ? 'Редактировать' : 'Добавить'),
+      title:
+          Text(_formState.mode == FormMode.edit ? 'Редактировать' : 'Добавить'),
       body: Form(
         key: _formKey,
         child: Column(

@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_todo_app/page/folder_form_page/folder_form_state.dart';
+import 'package:sample_todo_app/model/folder.dart';
+import 'package:sample_todo_app/state/form/folder_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
+import 'package:sample_todo_app/state/form/entity_form_state.dart';
 import 'package:sample_todo_app/widget/color_field/color_field.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
 import 'package:sample_todo_app/widget/form_section/form_section.dart';
 
 class FolderFormPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _formState = FolderFormState();
+  final FolderFormState _formState;
 
-  FolderFormPage({Key? key}) : super(key: key);
+  FolderFormPage._({Key? key, required FolderFormState data})
+      : _formState = data,
+        super(key: key);
+
+  factory FolderFormPage.add() {
+    return FolderFormPage._(data: FolderFormState.create());
+  }
+
+  factory FolderFormPage.edit(Folder folder) {
+    return FolderFormPage._(data: FolderFormState.fromModel(folder));
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomFormScaffold(
-      title: Text('Добавить папку'),
+      title: Text(
+          _formState.mode == FormMode.add ? 'Добавить папку' : 'Редактировать'),
       body: Form(
         key: _formKey,
         child: Column(children: [

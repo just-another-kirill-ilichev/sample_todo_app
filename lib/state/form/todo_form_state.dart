@@ -1,13 +1,7 @@
 import 'package:sample_todo_app/model/todo.dart';
+import 'package:sample_todo_app/state/form/entity_form_state.dart';
 
-enum TodoFormMode {
-  add,
-  edit,
-}
-
-class TodoFormState {
-  final TodoFormMode mode;
-  int? id;
+class TodoFormState extends EntityFormState<Todo, int> {
   String? title;
   String? description;
   DateTime? creationTime;
@@ -16,20 +10,20 @@ class TodoFormState {
   bool? finished;
 
   TodoFormState({
-    required this.mode,
-    this.id,
+    required FormMode mode,
+    int? id,
     this.title,
     this.description,
     this.notificationDateTime,
     this.creationTime,
     this.folderId,
     this.finished,
-  });
+  }) : super(mode, id);
 
   factory TodoFormState.fromModel(Todo todo) {
     return TodoFormState(
       id: todo.id,
-      mode: TodoFormMode.edit,
+      mode: FormMode.edit,
       title: todo.title,
       folderId: todo.folderId,
       description: todo.description,
@@ -48,11 +42,12 @@ class TodoFormState {
     ).add(Duration(days: 1));
 
     return TodoFormState(
-      mode: TodoFormMode.add,
+      mode: FormMode.add,
       notificationDateTime: notificationDateTime,
     );
   }
 
+  @override
   Todo toModel() {
     return Todo(
       id: id,
