@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ClickableText extends StatelessWidget {
+class FormSectionAction extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
 
-  const ClickableText({
+  const FormSectionAction({
     Key? key,
     required this.onTap,
     required this.text,
@@ -16,7 +16,10 @@ class ClickableText extends StatelessWidget {
       onTap: onTap,
       child: Text(
         text,
-        style: TextStyle(color: Theme.of(context).accentColor),
+        style: Theme.of(context)
+            .accentTextTheme
+            .bodyText2!
+            .copyWith(color: Theme.of(context).accentColor),
       ),
     );
   }

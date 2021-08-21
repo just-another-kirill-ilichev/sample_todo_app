@@ -4,7 +4,7 @@ import 'package:sample_todo_app/page/folder_form_page/folder_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/widget/color_field/color_field.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
-import 'package:sample_todo_app/widget/custom_form_section.dart';
+import 'package:sample_todo_app/widget/form_section/form_section.dart';
 
 class FolderFormPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -19,7 +19,7 @@ class FolderFormPage extends StatelessWidget {
       body: Form(
         key: _formKey,
         child: Column(children: [
-          CustomFormSection(
+          FormSection(
             title: Text('Название'),
             field: TextFormField(
               keyboardType: TextInputType.text,
@@ -30,7 +30,7 @@ class FolderFormPage extends StatelessWidget {
                   value?.isEmpty ?? true ? 'Заполните это поле' : null,
             ),
           ),
-          CustomFormSection(
+          FormSection(
             title: Text('Цвет'),
             // TODO: Update FormField value when color set by picker
             // action: ClickableText(
@@ -56,7 +56,7 @@ class FolderFormPage extends StatelessWidget {
               onSaved: (value) => _formState.color = value,
             ),
           ),
-          CustomFormSection(
+          FormSection(
             title: Text('Описание'),
             field: TextFormField(
               keyboardType: TextInputType.multiline,

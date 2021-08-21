@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomFormSection extends StatelessWidget {
+class FormSection extends StatelessWidget {
   final Widget title, field;
   final Widget? action;
 
-  const CustomFormSection({
+  const FormSection({
     Key? key,
     required this.title,
     required this.field,
@@ -19,16 +19,12 @@ class CustomFormSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 24, 0, 12),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: Theme.of(context).accentTextTheme.subtitle2!,
                 child: title,
               ),
+              Spacer(),
               if (action != null) action!,
             ],
           ),

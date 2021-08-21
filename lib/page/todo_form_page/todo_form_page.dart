@@ -6,9 +6,9 @@ import 'package:sample_todo_app/model/todo.dart';
 import 'package:sample_todo_app/page/todo_form_page/todo_form_state.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/todo_change_notifier.dart';
-import 'package:sample_todo_app/widget/clickable_text.dart';
+import 'package:sample_todo_app/widget/form_section/form_section_action.dart';
 import 'package:sample_todo_app/widget/custom_form_scaffold.dart';
-import 'package:sample_todo_app/widget/custom_form_section.dart';
+import 'package:sample_todo_app/widget/form_section/form_section.dart';
 import 'package:sample_todo_app/widget/custom_selector/custom_selector.dart';
 import 'package:sample_todo_app/widget/date_time_field.dart';
 
@@ -50,9 +50,9 @@ class TodoFormPage extends StatelessWidget {
   }
 
   Widget _buildFolder(BuildContext context) {
-    return CustomFormSection(
+    return FormSection(
       title: Text('Папка'),
-      action: ClickableText(
+      action: FormSectionAction(
         text: 'Добавить',
         onTap: () => Navigator.pushNamed(context, AppRoute.add_folder),
       ),
@@ -73,7 +73,7 @@ class TodoFormPage extends StatelessWidget {
   }
 
   Widget _buildNotificationDateTimeField() {
-    return CustomFormSection(
+    return FormSection(
       title: Text('Дата завершения'),
       field: DateTimeFormField(
         onSaved: (value) => _formState.notificationDateTime = value,
@@ -84,7 +84,7 @@ class TodoFormPage extends StatelessWidget {
   }
 
   Widget _buildDescriptionField() {
-    return CustomFormSection(
+    return FormSection(
       title: Text('Описание'),
       field: TextFormField(
         maxLines: 5,
@@ -103,7 +103,7 @@ class TodoFormPage extends StatelessWidget {
   }
 
   Widget _buildTitleField() {
-    return CustomFormSection(
+    return FormSection(
       title: Text('Название'),
       field: TextFormField(
         keyboardType: TextInputType.text,
