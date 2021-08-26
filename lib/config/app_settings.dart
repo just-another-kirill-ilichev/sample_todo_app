@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+@deprecated
 class AppSettings {
   static const locale = 'ru_RU';
 
