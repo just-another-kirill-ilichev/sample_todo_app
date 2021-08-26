@@ -1,13 +1,8 @@
 import 'package:logging/logging.dart';
+import 'package:sample_todo_app/domain/service/service.dart';
 
-class LogService {
-  static LogService _instance = LogService._();
-
-  LogService._();
-
-  factory LogService.instance() => _instance;
-
-  void initialize() {
+class LogService implements Service {
+  Future<void> initialize() async {
     Logger.root.level = Level.ALL;
     // TODO
     Logger.root.onRecord.listen((record) {

@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_todo_app/config/app_router.dart';
-import 'package:sample_todo_app/domain/db_service.dart';
-import 'package:sample_todo_app/domain/log_service.dart';
+import 'package:sample_todo_app/domain/service/db_service.dart';
+import 'package:sample_todo_app/domain/service/log_service.dart';
+import 'package:sample_todo_app/domain/service/preferences_service.dart';
 import 'package:sample_todo_app/page/loading_page/loading_page.dart';
 import 'package:sample_todo_app/state/folders_change_notifier.dart';
 import 'package:sample_todo_app/state/settings_change_notifier.dart';
@@ -14,32 +15,30 @@ import 'config/app_settings.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  LogService.instance().initialize();
-
   runApp(TodoApp());
 }
 
 class TodoApp extends StatelessWidget {
-  final DbService _dbService = DbService();
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.wait([
-        _dbService.initialize(),
-        initializeDateFormatting(AppSettings.locale),
-      ]),
-      builder: (context, snapshot) =>
-          snapshot.connectionState == ConnectionState.done
-              ? _buildApp(context)
-              : _buildSplashScreen(),
+    return ServicesInitializer(
+      loadingBuilder: (_) => _buildSplashScreen(),
+      errorBuilder: (_) => _buildSplashScreen(),
+      builder: (_) => FutureBuilder(
+        future: Future.wait([
+          initializeDateFormatting(AppSettings.locale),
+        ]),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.done
+                ? _buildApp(ctx)
+                : _buildSplashScreen(),
+      ),
     );
   }
 
   Widget _buildApp(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider.value(value: _dbService),
         ChangeNotifierProxyProvider<DbService, FoldersChangeNotifier>(
           create: (ctx) => FoldersChangeNotifier(
               Provider.of<DbService>(ctx, listen: false).folderRepository),
@@ -52,12 +51,15 @@ class TodoApp extends StatelessWidget {
           update: (ctx, service, __) =>
               TodoChangeNotifier(service.todoRepository),
         ),
-        ChangeNotifierProvider<SettingsChangeNotifier>(
-          create: (_) => SettingsChangeNotifier(),
-        )
+        ChangeNotifierProxyProvider<PreferencesService, SettingsChangeNotifier>(
+          create: (ctx) => SettingsChangeNotifier(
+              Provider.of<PreferencesService>(ctx, listen: false).preferences),
+          update: (ctx, service, __) =>
+              SettingsChangeNotifier(service.preferences),
+        ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'TODO',
         theme: ThemeData(
           primarySwatch: Colors.amber,
           highlightColor: Colors.amber.withOpacity(0.1),
@@ -130,6 +132,50 @@ class TodoApp extends StatelessWidget {
   Widget _buildSplashScreen() {
     return MaterialApp(
       home: LoadingPage(),
+    );
+  }
+}
+
+class ServicesInitializer extends StatelessWidget {
+  final LogService _logService = LogService();
+  final DbService _dbService = DbService();
+  final PreferencesService _prefsService = PreferencesService();
+
+  final WidgetBuilder builder, loadingBuilder, errorBuilder;
+
+  ServicesInitializer({
+    Key? key,
+    required this.builder,
+    required this.loadingBuilder,
+    required this.errorBuilder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+      future: Future.wait([
+        _logService,
+        _dbService,
+        _prefsService,
+      ].map((e) => e.initialize())),
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return loadingBuilder(ctx);
+        }
+
+        if (snapshot.hasError) {
+          return errorBuilder(ctx);
+        }
+
+        return MultiProvider(
+          providers: [
+            Provider<LogService>.value(value: _logService),
+            Provider<DbService>.value(value: _dbService),
+            Provider<PreferencesService>.value(value: _prefsService),
+          ],
+          child: builder(context),
+        );
+      },
     );
   }
 }
