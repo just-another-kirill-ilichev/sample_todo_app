@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
             children: [
               Text(
                 'Сохранять автоматически',
-                style: Theme.of(context).accentTextTheme.subtitle1,
+                style: Theme.of(context).accentTextTheme.subtitle2,
               ),
               Spacer(),
               Switch.adaptive(

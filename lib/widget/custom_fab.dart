@@ -33,7 +33,7 @@ class CustomFab extends StatelessWidget {
             color: accent,
             boxShadow: [
               BoxShadow(
-                color: Colors.amber.withOpacity(0.7),
+                color: Colors.amber.withOpacity(0.3),
                 offset: Offset(0, 4),
                 blurRadius: 12.0,
               )
